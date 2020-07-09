@@ -1,0 +1,13 @@
+.idea
+*.pyc
+.mypy_cache/
+.pytest_cache
+.vscode/
+env/
+
+.env
+
+/media/
+/static/
+venv/
+.DS_Store

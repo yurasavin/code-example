@@ -1,0 +1,53 @@
+version: '3.7'
+services:
+  db:
+    container_name: sample_db_1
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=django_code_example
+
+  redis:
+    container_name: sample_redis_1
+    image: redis:alpine
+
+  app:
+    container_name: sample_app
+    image: test/sample_app
+    build: .
+    env_file:
+      - env_example
+    volumes:
+      - ./src/:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    command: python manage.py runserver 0:8000
+
+  celery:
+    container_name: sample_celery_1
+    image: test/sample_app
+    build: .
+    env_file:
+      - env_example
+    volumes:
+      - ./src/:/app
+    depends_on:
+      - db
+      - redis
+    command: celery -A conf.celery worker -l INFO --concurrency 4
+
+  celery_beat:
+    container_name: sample_celery_beat_1
+    image: test/sample_app
+    build: .
+    env_file:
+      - env_example
+    volumes:
+      - ./src/:/app
+    depends_on:
+      - redis
+    command: celery -A conf.celery beat -l INFO --concurrency 4
