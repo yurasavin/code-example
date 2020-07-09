@@ -21,7 +21,7 @@ class TestLimitViewSet:
         url = reverse('limits-list')
         response = api_client.get(url)
         assert response.status_code == status.HTTP_200_OK
-        assert isinstance(response.json(), list)
+        assert isinstance(response.data, list)
 
     def test_retrieve(self, api_client):
         limit_info = LimitDateInfoFactory()
@@ -30,7 +30,7 @@ class TestLimitViewSet:
         response = api_client.get(url)
 
         assert response.status_code == status.HTTP_200_OK
-        assert isinstance(response.json(), dict)
+        assert isinstance(response.data, dict)
 
     @pytest.mark.freeze_time
     def test_retrieve_latest(self, api_client, freezer):
