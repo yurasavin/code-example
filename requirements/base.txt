@@ -3,7 +3,7 @@ celery==4.4.2
 redis==3.5.3
 psycopg2-binary==2.8.5
 django-extensions==2.2.9
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 django_filter==2.2.0
 flower==0.9.4
 django-environ==0.4.5
